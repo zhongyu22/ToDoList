@@ -7,11 +7,12 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
+const date = require(__dirname + "/date.js");
 var today = new Date();
 var currentDay = today.getDay();
 var day = "";
-let items = [];
-let workItems = [];
+const items = [];
+const workItems = [];
 
 switch (currentDay) {
     case 0:
@@ -41,15 +42,7 @@ switch (currentDay) {
 
 app.get("/", function(req, res) {
 
-    var today = new Date();
-
-    var options = {
-        weekday: "long",
-        day: "numeric",
-        month: "long"
-    };
-
-    var day = today.toLocaleDateString("en-US", options);
+    let day = date.getDate();
 
     res.render("list", {listTitle:day, newListItem:items});
 })
